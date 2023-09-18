@@ -12,8 +12,16 @@ provider "aws" {
 }
 
 
+/* 개발 용도 */
 module "default_custom_vpc" {
   source = "./custom_vpc" # custom_vpc아래의 모듈을 사용하겠다는 선언
+  env = "dev"
+}
+
+/* 운영 용도 */
+module "production_custom_vpc" {
+  source = "./custom_vpc" # custom_vpc안에 있는 tag name이 똑같이 들어감
+  env="prod"
 }
 
 # resource의 네임과 설정은 로컬에서만 판별하기 때문에

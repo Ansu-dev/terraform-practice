@@ -9,7 +9,7 @@ resource "aws_vpc" "default" {
 resource "aws_subnet" "public_subnet_1" {
   vpc_id = aws_vpc.default.id
   cidr_block = "10.0.0.0/24"
-  availability_zone = "ap-northeast-2a" # 가용영역 A
+  availability_zone = local.az_a # 가용영역 A
 
   tags = {
     Name = "fastcampus_public_subnet_1_${var.env}"
@@ -19,7 +19,7 @@ resource "aws_subnet" "public_subnet_1" {
 resource "aws_subnet" "private_subnet_1" {
   vpc_id = aws_vpc.default.id
   cidr_block = "10.0.100.0/24"
-  availability_zone = "ap-northeast-2a" # 가용영역 A
+  availability_zone = local.az_a # 가용영역 A
 
   tags = {
     Name = "fastcampus_private_subnet_1_${var.env}"

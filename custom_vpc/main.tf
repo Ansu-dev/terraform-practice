@@ -26,7 +26,7 @@ resource "aws_subnet" "private_subnet_1" {
   }
 }
 
-# nat_gateway
+/* # nat_gateway
 resource "aws_nat_gateway" "private_nat" {
   connectivity_type = "private"
   subnet_id = aws_subnet.private_subnet_1.id
@@ -43,4 +43,4 @@ resource "aws_internet_gateway" "internet_gateway" {
   tags = {
     Name ="fastcampus_internet_gateway_${var.env}"
   }
-}
+} */

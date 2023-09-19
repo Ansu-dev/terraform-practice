@@ -7,6 +7,7 @@ resource "aws_vpc" "default" {
 }
 
 resource "aws_subnet" "public_subnet_1" {
+  count = var.env == "prod" ? 0 : 1 # 개발과 운영의 생성 예외처리
   vpc_id = aws_vpc.default.id
   cidr_block = "10.0.0.0/24"
   availability_zone = local.az_a # 가용영역 A
@@ -15,6 +16,12 @@ resource "aws_subnet" "public_subnet_1" {
     Name = "fastcampus_public_subnet_1_${var.env}"
   }
 }
+
+/* resource "aws_nat_gateway" "public_nat" {
+  count = var.env == "prod" ? 0 : 1
+  connectivity_type = "public"
+  subnet_id = aws_subnet.public_subnet_1[0].id # prod일 경우엔 public vpc가 생성되지 않으므로
+} */
 
 resource "aws_subnet" "private_subnet_1" {
   vpc_id = aws_vpc.default.id

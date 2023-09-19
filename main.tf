@@ -30,13 +30,27 @@ variable "names" {
   default = [ "test1", "test2" ]
 }
 
-module "personal_custom_vpc" {
+variable "envs" {
+  type = list(string)
+  default = [ "dev","prod","" ]
+}
+
+/* module "personal_custom_vpc" {
   /* 구문이 바뀌면 replace 됨 */
   /* for_each = toset(var.names) */
-  for_each = toset([for name in var.names : "${name}_human"])
+  /* for_each = toset([for name in var.names : "${name}_human"])
   source = "./custom_vpc"
   env = "personal_${each.key}"
+} */
+
+
+module "vpc_list" {
+  for_each = toset([for env in var.envs : env if env != ""])
+  source = "./custom_vpc"
+  env = each.key
 }
+
+
 
 # resource의 네임과 설정은 로컬에서만 판별하기 때문에
 # datasource를 이용해서 클라우드 콘솔에 있는 id와 비교 할수 있음
